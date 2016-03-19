@@ -15,11 +15,13 @@ OBJS = \
 	picirq.o\
 	pipe.o\
 	proc.o\
+	manip.o\
 	spinlock.o\
 	string.o\
 	swtch.o\
 	syscall.o\
 	sysfile.o\
+	sysmanip.o\
 	sysproc.o\
 	timer.o\
 	trapasm.o\
@@ -168,6 +170,7 @@ UPROGS=\
 	_usertests\
 	_wc\
 	_zombie\
+	_shutdown\
 	
 
 fs.img: mkfs README $(UPROGS)

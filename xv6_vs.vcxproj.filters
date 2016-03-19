@@ -236,6 +236,15 @@
     <ClCompile Include="zombie.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="shutdown.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="sysmanip.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="manip.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="x86.h">
@@ -299,6 +308,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="asm.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="manip.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
