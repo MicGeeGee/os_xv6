@@ -64,32 +64,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="bootasm.S" />
-    <None Include="bootblock.asm" />
-    <None Include="cat.asm" />
-    <None Include="echo.asm" />
     <None Include="entry.S" />
-    <None Include="entryother.asm" />
     <None Include="entryother.S" />
-    <None Include="grep.asm" />
-    <None Include="init.asm" />
-    <None Include="initcode.asm" />
     <None Include="initcode.S" />
-    <None Include="kernel.asm" />
-    <None Include="kill.asm" />
-    <None Include="ln.asm" />
-    <None Include="ls.asm" />
-    <None Include="mkdir.asm" />
-    <None Include="print24.asm" />
-    <None Include="rm.asm" />
-    <None Include="sh.asm" />
-    <None Include="stressfs.asm" />
     <None Include="swtch.S" />
     <None Include="trapasm.S" />
-    <None Include="usertests.asm" />
     <None Include="usys.S" />
     <None Include="vectors.S" />
-    <None Include="wc.asm" />
-    <None Include="zombie.asm" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bio.c" />

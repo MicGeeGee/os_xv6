@@ -18,70 +18,22 @@
     <None Include="bootasm.S">
       <Filter>源文件</Filter>
     </None>
-    <None Include="bootblock.asm">
-      <Filter>源文件</Filter>
-    </None>
     <None Include="cat.asm">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="echo.asm">
       <Filter>源文件</Filter>
     </None>
     <None Include="entry.S">
       <Filter>源文件</Filter>
     </None>
-    <None Include="entryother.asm">
-      <Filter>源文件</Filter>
-    </None>
     <None Include="entryother.S">
       <Filter>源文件</Filter>
     </None>
-    <None Include="grep.asm">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="init.asm">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="initcode.asm">
-      <Filter>源文件</Filter>
-    </None>
     <None Include="initcode.S">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="kernel.asm">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="kill.asm">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="ln.asm">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="ls.asm">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="mkdir.asm">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="print24.asm">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="rm.asm">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="sh.asm">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="stressfs.asm">
       <Filter>源文件</Filter>
     </None>
     <None Include="swtch.S">
       <Filter>源文件</Filter>
     </None>
     <None Include="trapasm.S">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="usertests.asm">
       <Filter>源文件</Filter>
     </None>
     <None Include="usys.S">
@@ -91,9 +43,6 @@
       <Filter>源文件</Filter>
     </None>
     <None Include="wc.asm">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="zombie.asm">
       <Filter>源文件</Filter>
     </None>
   </ItemGroup>
@@ -243,6 +192,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="manip.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="forktest.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

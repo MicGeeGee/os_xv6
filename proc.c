@@ -6,15 +6,23 @@
 #include "x86.h"
 #include "proc.h"
 #include "spinlock.h"
+#include "manip.h"
+
 
 struct {
   struct spinlock lock;
   struct proc proc[NPROC];
 } ptable;
 
+
+
 static struct proc *initproc;
 
 int nextpid = 1;
+
+
+//extern int fork_winner_flag;
+//extern int fork_winner_run;
 
 extern void forkret(void);
 extern void trapret(void);
@@ -164,6 +172,10 @@ fork(void)
   np->state = RUNNABLE;
   release(&ptable.lock);
   
+
+  if(fork_winner_flag)
+	yield();
+
   return pid;
 }
 

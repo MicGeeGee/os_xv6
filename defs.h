@@ -9,6 +9,8 @@ struct spinlock;
 struct stat;
 struct superblock;
 
+
+
 // bio.c
 void            binit(void);
 struct buf*     bread(uint, uint);
@@ -181,7 +183,8 @@ void            clearpteu(pde_t *pgdir, char *uva);
 
 
 // manip.c
-int		    shutdown24(void);
+int				shutdown24(void);
+int				fork_winner(int);
 
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x)/sizeof((x)[0]))

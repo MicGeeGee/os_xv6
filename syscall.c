@@ -99,6 +99,7 @@ extern int sys_wait(void);
 extern int sys_write(void);
 extern int sys_uptime(void);
 extern int sys_shutdown24(void);
+extern int sys_fork_winner(void);
 
 
 static int (*syscalls[])(void) = {
@@ -123,7 +124,8 @@ static int (*syscalls[])(void) = {
 [SYS_link]    sys_link,
 [SYS_mkdir]   sys_mkdir,
 [SYS_close]   sys_close,
-[SYS_shutdown24] sys_shutdown24
+[SYS_shutdown24] sys_shutdown24,
+[SYS_fork_winner] sys_fork_winner
 };
 
 void

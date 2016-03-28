@@ -21,4 +21,5 @@
 #define SYS_mkdir  20
 #define SYS_close  21
 #define SYS_shutdown24 22
+#define SYS_fork_winner 23
 
