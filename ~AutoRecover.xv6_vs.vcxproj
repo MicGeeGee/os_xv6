@@ -64,6 +64,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="bootasm.S" />
+    <None Include="cat.asm" />
     <None Include="entry.S" />
     <None Include="entryother.S" />
     <None Include="initcode.S" />
@@ -71,6 +72,7 @@
     <None Include="trapasm.S" />
     <None Include="usys.S" />
     <None Include="vectors.S" />
+    <None Include="wc.asm" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bio.c" />
@@ -80,6 +82,7 @@
     <ClCompile Include="echo.c" />
     <ClCompile Include="exec.c" />
     <ClCompile Include="file.c" />
+    <ClCompile Include="forktest.c" />
     <ClCompile Include="fs.c" />
     <ClCompile Include="grep.c" />
     <ClCompile Include="ide.c" />
@@ -113,6 +116,7 @@
     <ClCompile Include="sysfile.c" />
     <ClCompile Include="sysmanip.c" />
     <ClCompile Include="sysproc.c" />
+    <ClCompile Include="termtest.c" />
     <ClCompile Include="timer.c" />
     <ClCompile Include="trap.c" />
     <ClCompile Include="uart.c" />

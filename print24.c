@@ -12,5 +12,6 @@ main(int argc, char *argv[])
   printf(1,"OS Lab 161310124:");
   for(i = 1; i < argc; i++)
     printf(1, "%s%s", argv[i], i+1 < argc ? " " : "\n");
-  exit();
+  //exit();
+  return 0;
 }
