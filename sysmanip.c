@@ -14,3 +14,15 @@ sys_fork_winner(int winner)
 {
 	return fork_winner(winner);
 }
+
+void*			
+sys_malloc24(int size)
+{
+	return malloc24(size);
+}
+
+int
+sys_free24(void* ptr, int size)
+{
+	return free24(ptr,size);
+}

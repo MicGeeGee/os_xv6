@@ -100,6 +100,12 @@ extern int sys_write(void);
 extern int sys_uptime(void);
 extern int sys_shutdown24(void);
 extern int sys_fork_winner(void);
+extern int sys_alloc_sem(void);
+extern int sys_wait_sem(void);
+extern int sys_signal_sem(void);
+extern int sys_dealloc_sem(void);
+extern int sys_malloc24(void);
+extern int sys_free24(void);
 
 
 static int (*syscalls[])(void) = {
@@ -125,7 +131,13 @@ static int (*syscalls[])(void) = {
 [SYS_mkdir]   sys_mkdir,
 [SYS_close]   sys_close,
 [SYS_shutdown24] sys_shutdown24,
-[SYS_fork_winner] sys_fork_winner
+[SYS_fork_winner] sys_fork_winner,
+[SYS_alloc_sem]	sys_alloc_sem,
+[SYS_wait_sem]	sys_wait_sem,
+[SYS_signal_sem] sys_signal_sem,
+[SYS_dealloc_sem] sys_dealloc_sem,
+[SYS_malloc24]  sys_malloc24,
+[SYS_free24]    sys_free24
 };
 
 void

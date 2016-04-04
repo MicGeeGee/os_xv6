@@ -77,6 +77,28 @@ sys_sleep(void)
   return 0;
 }
 
+int
+sys_alloc_sem(int v)
+{
+	return alloc_sem(v);
+}
+int
+sys_wait_sem(int i)
+{
+	return wait_sem(i);
+}
+int
+sys_signal_sem(int i)
+{
+	return signal_sem(i);
+}
+int
+sys_dealloc_sem(int i)
+{
+	return dealloc_sem(i);
+}
+
+
 // return how many clock tick interrupts have occurred
 // since start.
 int

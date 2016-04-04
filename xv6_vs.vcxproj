@@ -116,6 +116,7 @@
     <ClCompile Include="sysfile.c" />
     <ClCompile Include="sysmanip.c" />
     <ClCompile Include="sysproc.c" />
+    <ClCompile Include="termtest.c" />
     <ClCompile Include="timer.c" />
     <ClCompile Include="trap.c" />
     <ClCompile Include="uart.c" />

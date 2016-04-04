@@ -121,6 +121,7 @@ int             wait(void);
 void            wakeup(void*);
 void            yield(void);
 
+
 // swtch.S
 void            swtch(struct context**, struct context*);
 
@@ -185,6 +186,16 @@ void            clearpteu(pde_t *pgdir, char *uva);
 // manip.c
 int				shutdown24(void);
 int				fork_winner(int);
+void*			malloc24(int);
+int			free24(void*, int);
+void			minit24(void);
+
+// other system calls in proc.c
+int				alloc_sem(int v);
+int				wait_sem(int i);
+int				signal_sem(int i);
+int				dealloc_sem(int i);
+void			sinit(void);
 
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x)/sizeof((x)[0]))

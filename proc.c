@@ -16,6 +16,21 @@ struct {
 
 
 
+struct sem
+{
+  struct spinlock lock;
+  uint value;
+  struct proc_bloc* list_header;
+  struct proc_bloc* list_tail;
+  enum semstate state;
+};
+
+struct {
+  struct spinlock lock;
+  struct sem sem[NSEM];
+} stable;
+
+
 static struct proc *initproc;
 
 int nextpid = 1;
@@ -476,4 +491,152 @@ procdump(void)
     }
     cprintf("\n");
   }
+}
+
+int
+alloc_sem(int v)
+{
+	int i;
+	//In case that one process has not done alloc_sem, another came in and return the same index.
+	acquire(&stable.lock);
+	for(i=0;i<NSEM;i++)
+	{
+		if(stable.sem[i].state==VACANT)
+		{
+			stable.sem[i].value=v;
+			stable.sem[i].list_header=0;
+			stable.sem[i].list_tail=stable.sem[i].list_header;
+			initlock(&stable.sem[i].lock,"sem");
+			stable.sem[i].state=ALLOCATED;
+
+			release(&ptable.lock);
+			return i;
+		
+		}
+	}
+	release(&stable.lock);
+	cprintf("Error: semaphore memory has been run out of.\n");
+	return -1;
+}
+
+int 
+wait_sem(int i)
+{
+	acquire(&stable.sem[i].lock);
+	stable.sem[i].value--;
+	if(stable.sem[i].value<0)
+	{
+		release(&stable.sem[i].lock);
+		acquire(&ptable.lock);
+
+		if(stable.sem[i].list_tail==0)
+		{
+			stable.sem[i].list_header=(struct proc_bloc* )malloc24(sizeof(struct proc_bloc));
+			stable.sem[i].list_tail=stable.sem[i].list_header;
+		}
+		else
+		{
+			stable.sem[i].list_tail->next=(struct proc_bloc* )malloc24(sizeof(struct proc_bloc));
+			stable.sem[i].list_tail=stable.sem[i].list_tail->next;
+		}
+		//If allocating fails, return -1.
+		if(!stable.sem[i].list_tail)
+		{
+			release(&ptable.lock);
+			return -1;
+		}
+		stable.sem[i].list_tail->proc_ptr=proc;
+		stable.sem[i].list_tail->next=0;
+		
+
+		proc->chan=&stable.sem[i];
+		proc->state=SLEEPING;
+		sched();
+		
+		proc->chan=0;
+		release(&ptable.lock);
+		return 1;
+	}
+	else
+	{
+		release(&stable.sem[i].lock);
+		return 1;
+	}
+	
+}
+
+int 
+signal_sem(int i)
+{
+	struct proc_bloc* temp_ptr;
+	
+
+	acquire(&stable.sem[i].lock);
+	stable.sem[i].value++;
+	if(stable.sem[i].value<=0)
+	{
+		release(&stable.sem[i].lock);
+		acquire(&ptable.lock);
+
+		if(!stable.sem[i].list_header)
+		{
+			cprintf("Error: sem_%d does not have process waiting in list.\n",i);
+			release(&ptable.lock);
+			return -1;
+		}
+		temp_ptr=stable.sem[i].list_header;
+		stable.sem[i].list_header=stable.sem[i].list_header->next;
+		temp_ptr->proc_ptr->state=RUNNABLE;
+		
+
+		if(free24(temp_ptr,sizeof(struct proc_bloc))==-1)
+		{
+			release(&ptable.lock);
+			return -1;
+		}
+		else
+		{
+			release(&ptable.lock);
+			return 1;
+		}
+	}
+	else
+	{
+		release(&stable.sem[i].lock);
+		return 1;
+	}
+
+	
+}
+
+int 
+dealloc_sem(int i)
+{
+	struct proc_bloc* it;
+	acquire(&stable.lock);
+	if(stable.sem[i].state!=ALLOCATED)
+	{
+		cprintf("Error: state of sem_%d is not right.\n",i);
+		release(&stable.lock);
+		return -1;
+	}
+	for(it=stable.sem[i].list_header;it!=0;)
+	{
+		stable.sem[i].list_header=it->next;
+		it->proc_ptr->state=RUNNABLE;
+		if(free24(it,sizeof(struct proc_bloc))==-1)
+		{
+			release(&stable.lock);
+			return -1;
+		}
+		it=stable.sem[i].list_header;
+	}
+	stable.sem[i].state=VACANT;
+	release(&stable.lock);
+	return 1;
+}
+void
+sinit(void)
+{
+	initlock(&stable.lock,"stable");
 }

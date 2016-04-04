@@ -70,6 +70,19 @@ struct proc {
   char name[16];               // Process name (debugging)
 };
 
+struct proc_bloc
+{
+	struct proc* proc_ptr;
+	struct proc_bloc* next;
+};
+enum semstate { VACANT, ALLOCATED};
+
+
+
+
+
+
+
 // Process memory is laid out contiguously, low addresses first:
 //   text
 //   original data and bss
