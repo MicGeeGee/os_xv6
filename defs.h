@@ -187,7 +187,7 @@ void            clearpteu(pde_t *pgdir, char *uva);
 int				shutdown24(void);
 int				fork_winner(int);
 void*			malloc24(int);
-int			free24(void*, int);
+int			    free24(void*, int);
 void			minit24(void);
 
 // other system calls in proc.c

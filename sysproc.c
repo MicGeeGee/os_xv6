@@ -78,24 +78,36 @@ sys_sleep(void)
 }
 
 int
-sys_alloc_sem(int v)
+sys_alloc_sem(void)
 {
-	return alloc_sem(v);
+	int n;
+	if(argint(0, &n) < 0)
+		return -1;
+	return alloc_sem(n);
 }
 int
-sys_wait_sem(int i)
+sys_wait_sem(void)
 {
-	return wait_sem(i);
+	int n;
+	if(argint(0, &n) < 0)
+		return -1;
+	return wait_sem(n);
 }
 int
-sys_signal_sem(int i)
+sys_signal_sem(void)
 {
-	return signal_sem(i);
+	int n;
+	if(argint(0, &n) < 0)
+		return -1;
+	return signal_sem(n);
 }
 int
-sys_dealloc_sem(int i)
+sys_dealloc_sem(void)
 {
-	return dealloc_sem(i);
+	int n;
+	if(argint(0, &n) < 0)
+		return -1;
+	return dealloc_sem(n);
 }
 
 

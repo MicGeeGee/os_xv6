@@ -506,12 +506,11 @@ alloc_sem(int v)
 			stable.sem[i].value=v;
 			stable.sem[i].list_header=0;
 			stable.sem[i].list_tail=stable.sem[i].list_header;
-			initlock(&stable.sem[i].lock,"sem");
+			initlock(&(stable.sem[i].lock),"sem");
 			stable.sem[i].state=ALLOCATED;
 
-			release(&ptable.lock);
+			release(&stable.lock);
 			return i;
-		
 		}
 	}
 	release(&stable.lock);
@@ -522,10 +521,15 @@ alloc_sem(int v)
 int 
 wait_sem(int i)
 {
-	acquire(&stable.sem[i].lock);
+	int val;
+	//cprintf("i=%d\n",i);
+	//cprintf("stable.sem[i].state=%d &stable.sem[i].lock=0x%x\n",stable.sem[i].state,&stable.sem[i].lock);
+	acquire(&(stable.sem[i].lock));
 	stable.sem[i].value--;
-	if(stable.sem[i].value<0)
+	val=stable.sem[i].value;
+	if(val<0)
 	{
+		//cprintf("sem_%d.value=%d\n, &lock=0x%x",i,stable.sem[i].value,&stable.sem[i].lock);
 		release(&stable.sem[i].lock);
 		acquire(&ptable.lock);
 
@@ -568,12 +572,14 @@ wait_sem(int i)
 int 
 signal_sem(int i)
 {
+	int val;
 	struct proc_bloc* temp_ptr;
 	
 
 	acquire(&stable.sem[i].lock);
 	stable.sem[i].value++;
-	if(stable.sem[i].value<=0)
+	val=stable.sem[i].value;
+	if(val<=0)
 	{
 		release(&stable.sem[i].lock);
 		acquire(&ptable.lock);
@@ -584,11 +590,16 @@ signal_sem(int i)
 			release(&ptable.lock);
 			return -1;
 		}
+		
 		temp_ptr=stable.sem[i].list_header;
 		stable.sem[i].list_header=stable.sem[i].list_header->next;
+		//Special case: the list has been empty.
+		if(stable.sem[i].list_header==0)
+			stable.sem[i].list_tail=stable.sem[i].list_header;
+
 		temp_ptr->proc_ptr->state=RUNNABLE;
 		
-
+		
 		if(free24(temp_ptr,sizeof(struct proc_bloc))==-1)
 		{
 			release(&ptable.lock);
@@ -623,7 +634,8 @@ dealloc_sem(int i)
 	for(it=stable.sem[i].list_header;it!=0;)
 	{
 		stable.sem[i].list_header=it->next;
-		it->proc_ptr->state=RUNNABLE;
+		kill(it->proc_ptr->pid);
+		
 		if(free24(it,sizeof(struct proc_bloc))==-1)
 		{
 			release(&stable.lock);

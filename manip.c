@@ -33,6 +33,7 @@ malloc24(int size)
 	{
 		void* ptr=p_mem24.ptr;
 		p_mem24.ptr+=size;
+		p_mem24.size_left-=size;
 		return ptr;
 	}
 	else
@@ -47,6 +48,7 @@ free24(void* ptr, int size)
 	if(p_mem24.size_left+size<=4096)
 	{
 		p_mem24.ptr-=size;
+		p_mem24.size_left+=size;
 		return 1;
 	}
 	else

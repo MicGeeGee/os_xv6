@@ -35,6 +35,5 @@ SYSCALL(alloc_sem)
 SYSCALL(wait_sem)
 SYSCALL(signal_sem)
 SYSCALL(dealloc_sem)
-SYSCALL(malloc24)
-SYSCALL(free24)
+
 

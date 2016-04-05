@@ -26,7 +26,5 @@
 #define SYS_wait_sem 25
 #define SYS_signal_sem 26
 #define SYS_dealloc_sem 27
-#define SYS_malloc24 28
-#define SYS_free24 29
 
 

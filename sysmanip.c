@@ -10,19 +10,10 @@ sys_shutdown24(void)
 }
 
 int
-sys_fork_winner(int winner)
+sys_fork_winner(void)
 {
-	return fork_winner(winner);
-}
-
-void*			
-sys_malloc24(int size)
-{
-	return malloc24(size);
-}
-
-int
-sys_free24(void* ptr, int size)
-{
-	return free24(ptr,size);
+	int n;
+	if(argint(0, &n) < 0)
+		return -1;
+	return fork_winner(n);
 }

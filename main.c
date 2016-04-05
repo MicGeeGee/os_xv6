@@ -27,6 +27,7 @@ main(void)
   ioapicinit();    // another interrupt controller
   consoleinit();   // I/O devices & their interrupts
   uartinit();      // serial port
+  minit24();       // mem24
   pinit();         // process table
   sinit();		   // semaphore table
   tvinit();        // trap vectors

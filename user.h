@@ -29,8 +29,7 @@ int alloc_sem(int);
 int wait_sem(int);
 int signal_sem(int);
 int dealloc_sem(int);
-void* malloc24(int);
-int free24(void*, int);
+
 
 
 // ulib.c
