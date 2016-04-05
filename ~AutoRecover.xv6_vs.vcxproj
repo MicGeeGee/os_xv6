@@ -79,6 +79,7 @@
     <ClCompile Include="bootmain.c" />
     <ClCompile Include="cat.c" />
     <ClCompile Include="console.c" />
+    <ClCompile Include="dining_problem.c" />
     <ClCompile Include="echo.c" />
     <ClCompile Include="exec.c" />
     <ClCompile Include="file.c" />

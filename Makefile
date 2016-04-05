@@ -174,6 +174,7 @@ UPROGS=\
 	_forktest\
 	_termtest\
 	_semtest\
+	_dining_problem\
 	
 
 fs.img: mkfs README $(UPROGS)
