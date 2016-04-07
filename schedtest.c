@@ -13,6 +13,7 @@ int main()
 	int prior_arr[]={1,1,2,2,3,3};
 	int sem_arr[6];
 	int done_arr[6];
+
 	for(i=0;i<6;i++)
 	{
 		sem_arr[i]=alloc_sem(0);
@@ -51,6 +52,11 @@ int main()
 	//Restore the cursor.
 	printf(1,"\n");
 
-
+	
+	for(i=0;i<6;i++)
+	{
+		dealloc_sem(sem_arr[i]);
+		dealloc_sem(done_arr[i]);
+	}
 	return 0;
 }
