@@ -6,6 +6,7 @@
 
 int fork_winner_flag=0;
 int fork_winner_run=0;
+int display_enabled=0;
 struct mem24 p_mem24;
 
 
@@ -26,14 +27,17 @@ fork_winner(int winner)
 	return 0;
 }
 
+
+
 void*			
 malloc24(int size)
 {
-	if(p_mem24.size_left-size>=0)
+	if(p_mem24.pos+size<4096)
 	{
-		void* ptr=p_mem24.ptr;
-		p_mem24.ptr+=size;
-		p_mem24.size_left-=size;
+		void* ptr=p_mem24.bp+p_mem24.pos;
+		memset(&(p_mem24.used[(char* )ptr-p_mem24.bp]),1,sizeof(char)*size);
+		p_mem24.pos+=size;
+		
 		return ptr;
 	}
 	else
@@ -42,25 +46,41 @@ malloc24(int size)
 		return 0;
 	}
 }
+
+
+
 int 
 free24(void* ptr, int size)
 {
-	if(p_mem24.size_left+size<=4096)
+	int i;
+	int pos_temp;
+	
+	
+	memset(&(p_mem24.used[(char* )ptr-p_mem24.bp]),0,sizeof(char)*size);
+	
+	//If the memory at the position of allocator, then controll the allocator back.
+	if(((char* )ptr+size)==(p_mem24.bp+p_mem24.pos))
 	{
-		p_mem24.ptr-=size;
-		p_mem24.size_left+=size;
-		return 1;
+		pos_temp=p_mem24.pos;
+		for(i=pos_temp-1;i>=0;i--)
+		{
+			if(p_mem24.used[i]==0)
+				p_mem24.pos--;
+			else
+				break;
+		}
 	}
-	else
-	{
-		cprintf("Error:restored too much memory.\n");
-		return -1;
-	}
+	//cprintf("mem_pos=%d\n",p_mem24.pos);
+	//cprintf("pos=%d\n",p_mem24.pos);
+
+	return 1;
+	
 }
 
 void			
 minit24(void)
 {
-	p_mem24.ptr=kalloc();
-	p_mem24.size_left=4096;
+	p_mem24.bp=kalloc();
+	p_mem24.pos=0;
+	memset(p_mem24.used,0,sizeof(char)*4096);
 }

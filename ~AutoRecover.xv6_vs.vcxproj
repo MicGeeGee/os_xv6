@@ -106,6 +106,7 @@
     <ClCompile Include="pipe.c" />
     <ClCompile Include="print24.c" />
     <ClCompile Include="printf.c" />
+    <ClCompile Include="priortest.c" />
     <ClCompile Include="proc.c" />
     <ClCompile Include="rm.c" />
     <ClCompile Include="semtest.c" />

@@ -197,6 +197,18 @@
     <ClCompile Include="forktest.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="termtest.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="semtest.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="dining_problem.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="priortest.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="x86.h">

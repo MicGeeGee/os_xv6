@@ -34,10 +34,9 @@ struct {
 static struct proc *initproc;
 
 int nextpid = 1;
+int cur_priority = 1;
 
 
-//extern int fork_winner_flag;
-//extern int fork_winner_run;
 
 extern void forkret(void);
 extern void trapret(void);
@@ -71,6 +70,9 @@ allocproc(void)
 found:
   p->state = EMBRYO;
   p->pid = nextpid++;
+
+  p->priority=INITIAL_PRIORITY;
+
   release(&ptable.lock);
 
   // Allocate kernel stack.
@@ -293,7 +295,9 @@ wait(void)
 void
 scheduler(void)
 {
+  
   struct proc *p;
+
 
   for(;;){
     // Enable interrupts on this processor.
@@ -301,10 +305,16 @@ scheduler(void)
 
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
-    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      if(p->state != RUNNABLE)
-        continue;
 
+	
+
+	
+	
+	//cprintf("prior=%d\n",cur_priority);
+    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+      if(p->state != RUNNABLE || (p->priority)<cur_priority)
+		continue;
+	
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
@@ -312,7 +322,7 @@ scheduler(void)
       switchuvm(p);
       p->state = RUNNING;
       swtch(&cpu->scheduler, proc->context);
-      switchkvm();
+	  switchkvm();
 
       // Process is done running for now.
       // It should have changed its p->state before coming back.
@@ -329,6 +339,8 @@ void
 sched(void)
 {
   int intena;
+  
+  struct proc* p;
 
   if(!holding(&ptable.lock))
     panic("sched ptable.lock");
@@ -338,7 +350,18 @@ sched(void)
     panic("sched running");
   if(readeflags()&FL_IF)
     panic("sched interruptible");
+
+ 
+  
   intena = cpu->intena;
+
+  
+  cur_priority=1;
+    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+	  if(p->state ==RUNNABLE && (p->priority)>cur_priority)
+		cur_priority=p->priority;
+	}
+
   swtch(&proc->context, cpu->scheduler);
   cpu->intena = intena;
 }
@@ -350,6 +373,8 @@ yield(void)
  
   acquire(&ptable.lock);  //DOC: yieldlock
   proc->state = RUNNABLE;
+  if(display_enabled==1)
+	cprintf("%d -",proc->pid);
   sched();
   release(&ptable.lock);
 }
@@ -524,6 +549,9 @@ wait_sem(int i)
 	int val;
 	//cprintf("i=%d\n",i);
 	//cprintf("stable.sem[i].state=%d &stable.sem[i].lock=0x%x\n",stable.sem[i].state,&stable.sem[i].lock);
+
+	//cprintf("pid=%d, sem_i=%d, ptable.lock.locked=%d\n",proc->pid,i,ptable.lock.locked);
+
 	acquire(&(stable.sem[i].lock));
 	stable.sem[i].value--;
 	val=stable.sem[i].value;
@@ -651,4 +679,33 @@ void
 sinit(void)
 {
 	initlock(&stable.lock,"stable");
+}
+
+int
+set_priority(int pid, int prior)
+{
+	struct proc *p;
+	
+	//acquire(&ptable.lock);
+	for(p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+	{
+		if(p->pid==pid)
+		{	
+			p->priority=prior;
+			return 1;
+		}
+	}
+	cprintf("Error: this process does not exist.\n");
+	//release(&ptable.lock);
+
+	return 0;
+}
+
+int
+enable_schedule_display(int i)
+{
+	//acquire(&ptable.lock);
+	display_enabled=i;
+	//release(&ptable.lock);
+	return 0;
 }

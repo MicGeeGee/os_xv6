@@ -196,6 +196,8 @@ int				wait_sem(int i);
 int				signal_sem(int i);
 int				dealloc_sem(int i);
 void			sinit(void);
+int             set_priority(int, int);
+int             enable_schedule_display(int);
 
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x)/sizeof((x)[0]))

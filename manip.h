@@ -4,11 +4,13 @@
 
 extern int fork_winner_flag;
 extern int fork_winner_run;
+extern int display_enabled;
 
 struct mem24
 {
-	char* ptr;
-	int size_left;
+	char* bp;
+	int pos;
+	char used[4096];
 };
 
 extern struct mem24 p_mem24;

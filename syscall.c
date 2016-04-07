@@ -100,11 +100,12 @@ extern int sys_write(void);
 extern int sys_uptime(void);
 extern int sys_shutdown24(void);
 extern int sys_fork_winner(void);
+extern int sys_enable_schedule_display(void);
 extern int sys_alloc_sem(void);
 extern int sys_wait_sem(void);
 extern int sys_signal_sem(void);
 extern int sys_dealloc_sem(void);
-
+extern int sys_set_priority(void);
 
 
 static int (*syscalls[])(void) = {
@@ -134,7 +135,9 @@ static int (*syscalls[])(void) = {
 [SYS_alloc_sem]	sys_alloc_sem,
 [SYS_wait_sem]	sys_wait_sem,
 [SYS_signal_sem] sys_signal_sem,
-[SYS_dealloc_sem] sys_dealloc_sem
+[SYS_dealloc_sem] sys_dealloc_sem,
+[SYS_enable_schedule_display] sys_enable_schedule_display,
+[SYS_set_priority] sys_set_priority
 };
 
 void

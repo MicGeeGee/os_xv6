@@ -79,6 +79,7 @@
     <ClCompile Include="bootmain.c" />
     <ClCompile Include="cat.c" />
     <ClCompile Include="console.c" />
+    <ClCompile Include="dining_problem.c" />
     <ClCompile Include="echo.c" />
     <ClCompile Include="exec.c" />
     <ClCompile Include="file.c" />
@@ -105,8 +106,10 @@
     <ClCompile Include="pipe.c" />
     <ClCompile Include="print24.c" />
     <ClCompile Include="printf.c" />
+    <ClCompile Include="priortest.c" />
     <ClCompile Include="proc.c" />
     <ClCompile Include="rm.c" />
+    <ClCompile Include="semtest.c" />
     <ClCompile Include="sh.c" />
     <ClCompile Include="shutdown.c" />
     <ClCompile Include="spinlock.c" />

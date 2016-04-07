@@ -25,11 +25,12 @@ int sleep(int);
 int uptime(void);
 int shutdown24(void);
 int fork_winner(int);
+int enable_schedule_display(int);
 int alloc_sem(int);
 int wait_sem(int);
 int signal_sem(int);
 int dealloc_sem(int);
-
+int set_priority(int, int);
 
 
 // ulib.c

@@ -31,9 +31,11 @@ SYSCALL(sleep)
 SYSCALL(uptime)
 SYSCALL(shutdown24)
 SYSCALL(fork_winner)
+SYSCALL(enable_schedule_display)
 SYSCALL(alloc_sem)
 SYSCALL(wait_sem)
 SYSCALL(signal_sem)
 SYSCALL(dealloc_sem)
+SYSCALL(set_priority)
 
 
